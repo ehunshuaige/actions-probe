@@ -1,0 +1,15 @@
+name: macos-probe
+on: workflow_dispatch
+jobs:
+  p:
+    runs-on: macos-26
+    timeout-minutes: 15
+    steps:
+      - run: sw_vers
+      - run: xcodebuild -version || true
+      - run: DEVELOPER_DIR=/Applications/Xcode_26.6.app/Contents/Developer xcodebuild -version || true
+      - run: ls -la /Library/Developer/KDKs 2>/dev/null || echo "no /Library/Developer/KDKs"
+      - run: ls /Applications | grep -i xcode || true
+      - run: xcrun --sdk iphoneos --show-sdk-version || true
+      - run: xcrun --sdk iphoneos --find mig || true
+      - run: ls /Library/Developer/CoreSimulator 2>/dev/null | head -3 || true
